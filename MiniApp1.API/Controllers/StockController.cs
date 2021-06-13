@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 namespace MiniApp1.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = "TestSema")]
-
+    [Authorize]
     [ApiController]
     public class StockController : ControllerBase
     {
