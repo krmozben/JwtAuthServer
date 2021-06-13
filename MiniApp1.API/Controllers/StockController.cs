@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace MiniApp1.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "TestSema")]
+
     [ApiController]
     public class StockController : ControllerBase
     {
@@ -19,8 +20,8 @@ namespace MiniApp1.API.Controllers
         public IActionResult GetStock()
         {
             var userName = HttpContext.User.Identity.Name;
-            
-            var userIdClaim = User.Claims.FirstOrDefault(x=>x.Type == ClaimTypes.NameIdentifier);
+
+            var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
 
             return Ok($"Stok İşlemleri => UserName :{userName}-UserId :{userIdClaim.Value}");
         }
