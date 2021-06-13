@@ -24,7 +24,7 @@ namespace UdemyAuthServer.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserDto createUserDto)
         {
-            throw new CustomException("Bir hata geldi db ile ilgili");
+            //throw new CustomException("Bir hata geldi db ile ilgili");
             return ActionResultInstance(await _userService.CreateUserAsync(createUserDto));
         }
 
