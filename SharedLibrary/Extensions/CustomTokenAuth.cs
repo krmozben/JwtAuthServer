@@ -11,11 +11,12 @@ namespace SharedLibrary.Extensions
     {
         public static void AddCustomTokenAuth(this IServiceCollection services, CustomTokenOption tokenOption)
         {
-            services.AddAuthentication(opt =>
+            services.AddAuthentication(options =>
             {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
             {
                 opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
@@ -31,42 +32,6 @@ namespace SharedLibrary.Extensions
                     ClockSkew = TimeSpan.Zero
                 };
             });
-
-            ///
-            /// Aşağıdaki kod bloğu ek olarak farklı bir Jwt çözümleme şeması kullanılmak istendiğinde kullanılır.
-            /// Ve şemanın kullanılması istenilen controller sınıfına bu kod eklenir =>  [Authorize(AuthenticationSchemes = "Test")]
-            ///
-
-            //services.AddAuthentication(opt =>
-            //{
-            //    opt.DefaultAuthenticateScheme = "Test";
-            //    opt.DefaultChallengeScheme = "Test";
-            //}).AddJwtBearer("Test", opt =>
-            //{
-            //    opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            //    {
-            //        ValidIssuer = tokenOption.Issuer,
-            //        ValidAudience = tokenOption.Audience[0],
-            //        IssuerSigningKey = SignService.GetSymmetricSecurityKey(tokenOption.SecurityKey),
-
-            //        ValidateIssuerSigningKey = true,
-            //        ValidateAudience = true,
-            //        ValidateIssuer = true,
-            //        ValidateLifetime = true,
-
-            //        ClockSkew = TimeSpan.Zero
-            //    };
-            //});
-
-            //services.AddAuthorization(options =>
-            //{
-            //    var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(
-            //        JwtBearerDefaults.AuthenticationScheme,
-            //        "Test");
-            //    defaultAuthorizationPolicyBuilder =
-            //        defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
-            //    options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
-            //});
         }
     }
 }
